@@ -1,0 +1,13 @@
+.DS_Store
+.metadata/*
+.metadata/.*
+#.project
+#.classpath
+#.settings
+#.settings/*
+*.class
+*.metadata
+# Package Files #
+#*.jar
+#*.war
+#*.ear
