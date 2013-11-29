@@ -1,4 +1,4 @@
-package com.myschool.game.start;
+package com.myschool.game.main;
 
 import com.myschool.game.R;
 

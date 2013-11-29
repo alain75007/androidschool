@@ -1,6 +1,5 @@
-package com.myschool.game.start;
+package com.myschool.game.main;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -45,7 +44,6 @@ public class MainActivity extends FragmentActivity implements
 		Log.d(tag, "Coucou");
 		EditText viewCharname = (EditText) findViewById(R.id.charname);
 		String charname = viewCharname.getText().toString();
-		Context context = getApplicationContext();
 		if (charname.matches("")) {
 			Toast.makeText(getApplicationContext(),
 					"Le nom du personnage est a renseigner", Toast.LENGTH_SHORT)
@@ -56,7 +54,6 @@ public class MainActivity extends FragmentActivity implements
 			case 0:
 				MyApplication.setPerson((Character) new Character(charname));
 				break;
-
 			case 1:
 				MyApplication.setPerson((Character) new Warrior(charname));
 				break;
@@ -73,7 +70,6 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	public void onFinishCharTypeChooser(int which) {
-		// TODO Auto-generated method stub
 		Toast.makeText(this, "" + which, Toast.LENGTH_SHORT).show();
 		this.mCharTypeNum = which;
 	}
