@@ -30,11 +30,12 @@ public final class R {
         public static final int LinearLayout1=0x7f090000;
         public static final int TextView01=0x7f090003;
         public static final int TextView02=0x7f090001;
-        public static final int action_settings=0x7f090007;
+        public static final int action_settings=0x7f090008;
         public static final int button1=0x7f090005;
         public static final int charname=0x7f090002;
         public static final int chartype=0x7f090004;
         public static final int shop_chooser_button=0x7f090006;
+        public static final int shop_name=0x7f090007;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;

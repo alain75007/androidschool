@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <application
         android:allowBackup="true"
@@ -26,6 +26,7 @@
             android:name="com.myschool.achat.ShoppingActivity"
             android:label="@string/title_activity_shopping" >
         </activity>
+        <provider android:name="com.myschool.game.database.StoreProvider" android:authorities="com.myschool.game.database.StoreProvider"></provider>
     </application>
 
 </manifest>

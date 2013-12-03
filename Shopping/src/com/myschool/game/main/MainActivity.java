@@ -52,10 +52,10 @@ public class MainActivity extends FragmentActivity implements
 			// TODO améliorer ce code
 			switch (mCharTypeNum) {
 			case 0:
-				MyApplication.setPerson((Character) new Character(charname));
+				new Character(charname);
 				break;
 			case 1:
-				MyApplication.setPerson((Character) new Warrior(charname));
+				new Warrior(charname);
 				break;
 			default:
 				Toast.makeText(getApplicationContext(),

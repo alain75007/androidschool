@@ -16,4 +16,16 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="56dp" />
 
+    <EditText
+        android:id="@+id/shop_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/shop_chooser_button"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
 </RelativeLayout>
