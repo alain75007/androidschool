@@ -1,9 +1,13 @@
 package com.myschool.achat;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
+
+import com.myschool.game.database.StoreDatabaseHelper;
 
 public class ShoppingActivity extends Activity {
 
@@ -15,13 +19,13 @@ public class ShoppingActivity extends Activity {
 		Toast.makeText(getApplicationContext(), "Nom du personnage " + myApplication.person.getName(), Toast.LENGTH_SHORT).show();
 
 		//Product product =  new Product("Bow", 10);
-/*		StoreDatabaseHelper storeDatabaseHelper = new databaseHelper(myApplication);
+		StoreDatabaseHelper storeDatabaseHelper = new StoreDatabaseHelper(myApplication);
 		Cursor cursor = storeDatabaseHelper.selectAll(null);
-		Log.i("Alain",  "Number of rows : " + cursor.getCount());
+		Log.i("Alain",  "Nomber of rows : " + cursor.getCount());
 
 		while (cursor.moveToNext()) {
 			Log.i("Alain","Name " +  cursor.getString(0));
-		}*/
+		}
 		//Log.i("Alain", toto);
 	}
 
