@@ -11,12 +11,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.myschool.game.model.Product;
-import com.myschool.game.model.Store;
+import com.myschool.game.model.Shop;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-	private static final String DATABASE_NAME = "store.db";
-	private static final int DATABASE_VERSION = 7;
+	private static final String DATABASE_NAME = "game.db";
+	private static final int DATABASE_VERSION = 1;
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -71,7 +71,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	// SHOP CRUD
-	public int createStore(Store shop) {
+	public int createShop(Shop shop) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(KEY_SHOP_NAME, shop.getName());
@@ -80,38 +80,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return id;
 	}
 
-	public Store getStore(int id) {
+	public Shop getShop(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		String sql = "SELECT * FROM " + TABLE_SHOP + " WHERE id " + id;
 		Cursor cursor = db.rawQuery(sql, null);
 		if (cursor != null) {
 			cursor.moveToFirst();
 		}
-		Store store = new Store();
-		store.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-		store.setName(cursor.getString(cursor.getColumnIndex(KEY_SHOP_NAME)));
-		return store;
+		Shop shop = new Shop();
+		shop.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+		shop.setName(cursor.getString(cursor.getColumnIndex(KEY_SHOP_NAME)));
+		return shop;
 	}
 
-	public List<Store> getAllStores() {
-		List<Store> stores = new ArrayList<Store>();
+	public List<Shop> getAllShops() {
+		List<Shop> shops = new ArrayList<Shop>();
 		SQLiteDatabase db = this.getReadableDatabase();
 		String sql = "SELECT * FROM " + TABLE_SHOP;
 		Cursor cursor = db.rawQuery(sql, null);
 		Log.d("Alain", "count = " + cursor.getCount());
 		if (cursor.moveToFirst()) {
 			do {
-				Store store = new Store();
-				store.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-				store.setName(cursor.getString(cursor
+				Shop shop = new Shop();
+				shop.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+				shop.setName(cursor.getString(cursor
 						.getColumnIndex(KEY_SHOP_NAME)));
-				stores.add(store);
+				shops.add(shop);
 			} while (cursor.moveToNext());
 		}
-		return stores;
+		return shops;
 	}
 
-	public int updateStore(Store shop) {
+	public int updateShop(Shop shop) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(KEY_SHOP_NAME, shop.getName());
@@ -119,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				null);
 	}
 
-	public void deleteStore(Store shop) {
+	public void deleteShop(Shop shop) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(TABLE_SHOP, KEY_ID + " = " + shop.getId(), null);
 	}
@@ -128,7 +128,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public int createProduct(Product product) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(KEY_PRODUCT_SHOP_ID, product.getStoreId());
+		values.put(KEY_PRODUCT_SHOP_ID, product.getShopId());
 		values.put(KEY_PRODUCT_NAME, product.getName());
 		values.put(KEY_PRODUCT_CATEGORY, product.getCategory());
 		values.put(KEY_PRODUCT_SUBCATEGORY, product.getSubCategory());
@@ -149,7 +149,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return getProduct(cursor);
 	}
 
-	public List<Product> getAllProducts(Store shop) {
+	public List<Product> getAllProducts(Shop shop) {
 		List<Product> products = new ArrayList<Product>();
 		SQLiteDatabase db = this.getReadableDatabase();
 		String sql = "SELECT * FROM " + TABLE_PRODUCT + " WHERE "
@@ -166,7 +166,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private Product getProduct(Cursor cursor) {
 		Product product = new Product();
 		product.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-		product.setStore_id(cursor.getInt(cursor
+		product.setShopId(cursor.getInt(cursor
 				.getColumnIndex(KEY_PRODUCT_SHOP_ID)));
 		product.setName(cursor.getString(cursor
 				.getColumnIndex(KEY_PRODUCT_NAME)));
@@ -183,7 +183,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(KEY_PRODUCT_NAME, product.getName());
-		values.put(KEY_PRODUCT_SHOP_ID, product.getStoreId());
+		values.put(KEY_PRODUCT_SHOP_ID, product.getShopId());
 		values.put(KEY_PRODUCT_CATEGORY, product.getCategory());
 		values.put(KEY_PRODUCT_SUBCATEGORY, product.getSubCategory());
 		values.put(KEY_PRODUCT_PRICE, product.getPrice());
@@ -196,6 +196,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void deleteProduct(Product product) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(TABLE_PRODUCT, KEY_ID + " = " + product.getId(), null);
+	}
+
+	public void logAllShops() {
+		List<Shop> shopList = getAllShops();
+		for (Shop shop : shopList) {
+			Log.d("Alain", "Shop " + shop.getName());
+			List<Product> productList = getAllProducts(shop);
+			for (Product p : productList) {
+				Log.d("Alain",
+						"  Product " + p.getName() + " category: "
+								+ p.getCategory() + " subCategory: "
+								+ p.getSubCategory() + " price: "
+								+ p.getPrice() + " count: " + p.getCount());
+
+			}
+		}
+		
 	}
 
 }

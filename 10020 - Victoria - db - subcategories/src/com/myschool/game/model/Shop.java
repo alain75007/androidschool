@@ -1,19 +1,19 @@
 package com.myschool.game.model;
 
-public class Store {
+public class Shop {
 	private int id = -1;
 	private String name;
 	private int category_id;
 	
-	public Store(int id, String name) {
+	public Shop(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
 
-	public Store() {
+	public Shop() {
 	}
 
-	public Store(String name) {
+	public Shop(String name) {
 		this.name = name;
 	}
 

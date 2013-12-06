@@ -11,9 +11,9 @@ public class Product {
 	public Product() {
 	}
 
-	public Product(Store store, String name, String category, String subCategory,
+	public Product(Shop shop, String name, String category, String subCategory,
 			int price, int count) {
-		this.storeId = store.getId();
+		this.storeId = shop.getId();
 		this.name = name;
 		this.category = category;
 		this.subCategory = subCategory;
@@ -27,10 +27,10 @@ public class Product {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getStoreId() {
+	public int getShopId() {
 		return storeId;
 	}
-	public void setStore_id(int storeId) {
+	public void setShopId(int storeId) {
 		this.storeId = storeId;
 	}
 	public String getName() {

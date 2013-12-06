@@ -17,7 +17,7 @@ import com.myschool.game.character.Warrior;
 
 public class MainActivity extends Activity {
 
-    private static final String tag = "Alain";
+    private static final String TAG = "Alain";
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
     }
     
     public void onCreateCharacterClick(View v) {
-    	Log.d("Alain", "Coucou");
+    	Log.d(TAG, "Coucou");
     	EditText charname = (EditText) findViewById(R.id.charname);
     	Spinner chartype = (Spinner) findViewById(R.id.chartype);
 		Context context = getApplicationContext();

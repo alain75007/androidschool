@@ -1,17 +1,14 @@
 package com.myschool.game.main;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
 
 import com.myschool.game.R;
 import com.myschool.game.database.helper.DatabaseHelper;
 import com.myschool.game.model.Product;
-import com.myschool.game.model.Store;
+import com.myschool.game.model.Shop;
 
 public class ShoppingActivity extends Activity {
 
@@ -27,53 +24,41 @@ public class ShoppingActivity extends Activity {
 		// Initialisation de la database
 		DatabaseHelper databaseHelper = new DatabaseHelper(myApplication);
 
-		Store store;
+		Shop shop;
 		Product product;
-		store = new Store("Kevin Weapons");
-		databaseHelper.createStore(store);
+		shop = new Shop("Kevin Weapons");
+		databaseHelper.createShop(shop);
 
-		product = new Product(store, "Arc", "Armes", "Armes de projection",
+		product = new Product(shop, "Arc", "Armes", "Armes de projection",
 				100, 10);
 		databaseHelper.createProduct(product);
 
-		product = new Product(store, "Epée", "Armes", "Armes blanches", 80, 10);
+		product = new Product(shop, "Epée", "Armes", "Armes blanches", 80, 10);
 		databaseHelper.createProduct(product);
 
-		product = new Product(store, "Poignard", "Armes", "Armes blanches", 50,
+		product = new Product(shop, "Poignard", "Armes", "Armes blanches", 50,
 				10);
 		databaseHelper.createProduct(product);
 
-		store = new Store("Jules Wear");
-		databaseHelper.createStore(store);
+		shop = new Shop("Jules Wear");
+		databaseHelper.createShop(shop);
 
-		product = new Product(store, "Armure", "Protection", "Armure", 120, 10);
+		product = new Product(shop, "Armure", "Protection", "Armure", 120, 10);
 		databaseHelper.createProduct(product);
 
-		product = new Product(store, "Casque", "Protection", "Armure", 120, 10);
+		product = new Product(shop, "Casque", "Protection", "Armure", 120, 10);
 		databaseHelper.createProduct(product);
 
-		product = new Product(store, "Jambière", "Protection", "Armure", 120,
+		product = new Product(shop, "Jambière", "Protection", "Armure", 120,
 				10);
 		databaseHelper.createProduct(product);
 
-		product = new Product(store, "Cotte de mailles", "Protection",
+		product = new Product(shop, "Cotte de mailles", "Protection",
 				"Armure", 120, 10);
 		databaseHelper.createProduct(product);
 
-		List<Store> storeList = databaseHelper.getAllStores();
-		for (Store shop : storeList) {
-			Log.d("Alain", "Shop " + shop.getName());
-			List<Product> productList = databaseHelper.getAllProducts(shop);
-			for (Product p : productList) {
-				Log.d("Alain",
-						"  Product " + p.getName() + " category: "
-								+ p.getCategory() + " subCategory: "
-								+ p.getSubCategory() + " price: "
-								+ p.getPrice() + " count: " + p.getCount());
-
-			}
-		}
-
+		databaseHelper.logAllShops();
+	
 	}
 
 	@Override
