@@ -19,7 +19,7 @@ public class ShoppingActivity extends Activity {
 		MyApplication myApplication = (MyApplication) getApplication();
 		Toast.makeText(getApplicationContext(),
 				"Nom du personnage " + myApplication.person.getName(),
-				Toast.LENGTH_SHORT).show();
+				Toast.LENGTH_LONG).show();
 
 		// Initialisation de la database
 		DatabaseHelper databaseHelper = new DatabaseHelper(myApplication);

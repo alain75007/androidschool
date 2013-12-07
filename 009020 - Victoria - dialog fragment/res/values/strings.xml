@@ -7,8 +7,8 @@
     <string name="character_name">Nom du personnage</string>
     <string name="character_type">Type de personnage</string>
 
-    <string-array name="character_type_array">
-        <item></item>
+	<string name="character_type_chooser_title">Choisissez un type de personnage:</string>
+    <string-array name="character_type_chooser_array">
         <item>Personnage</item>
         <item>Warrior</item>
     </string-array>

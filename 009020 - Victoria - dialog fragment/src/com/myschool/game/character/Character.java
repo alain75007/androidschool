@@ -1,5 +1,9 @@
 package com.myschool.game.character;
 
+import android.content.Context;
+import com.myschool.game.main.MyApplication;
+
+
 public class Character {
 	private String name;
 

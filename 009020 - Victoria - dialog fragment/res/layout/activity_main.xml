@@ -27,18 +27,12 @@
         <requestFocus />
     </EditText>
 
-    <TextView
-        android:id="@+id/TextView01"
-        android:layout_width="283dp"
-        android:layout_height="wrap_content"
-        android:text="@string/character_type" />
-
-    <Spinner
-        android:id="@+id/chartype"
+    <Button
+        android:id="@+id/act_main_btn_char_chooser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/character_type_array"
-        android:prompt="@string/character_type" />
+        android:onClick="onCharTypeButtonClick"
+        android:text="@string/character_type" />
 
     <Button
         android:id="@+id/button1"
