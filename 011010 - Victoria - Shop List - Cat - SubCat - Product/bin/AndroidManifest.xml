@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="19" />
 
     <application
@@ -24,19 +24,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.myschool.game.shoppingActivities.ShoppingActivity"
-            android:label="@string/title_activity_shopping" >
-        </activity>
-        <activity
-            android:name="com.myschool.game.main.GameActivityOld"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_game"
-            android:theme="@style/FullscreenTheme" >
-        </activity>
-        <activity
             android:name="com.myschool.game.main.GameActivity"
             android:label="@string/title_activity_game" >
         </activity>
+        <activity android:name="com.myschool.game.shopping.ShoppingActivity"></activity>
     </application>
 
 </manifest>

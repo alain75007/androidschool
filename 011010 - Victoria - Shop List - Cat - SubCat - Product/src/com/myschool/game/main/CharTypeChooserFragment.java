@@ -15,21 +15,26 @@ public class CharTypeChooserFragment extends DialogFragment {
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+		/*
+		 * You can use getActivity(), which returns the activity associated with
+		 * a fragment. The activity is a context (since Activity extends
+		 * Context).
+		 */
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle(R.string.character_type_chooser_title).setItems(
 				R.array.character_type_chooser_array,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 
-						// The 'which' argument contains the index position
-						// of the selected item
-						// Log.d("Alain", chooser[which]);
+						// Get call calling activity (which implement interface
+						// method CharTypeChooserListener
 						CharTypeChooserListener activity = (CharTypeChooserListener) getActivity();
-						// Toast.makeText(getActivity(),
-						// "Le nom du personnage est a renseigner",
-						// Toast.LENGTH_SHORT).show();
-						// getActivity().finish();
+
+						// Call interface method of calling onFinsih
 						activity.onFinishCharTypeChooser(which);
+
+						// close dialog
 						getDialog().dismiss();
 
 					}

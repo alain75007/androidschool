@@ -41,13 +41,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int LinearLayout1=0x7f0a0000;
         public static final int TextView02=0x7f0a0001;
         public static final int act_game_btn_buy=0x7f0a0008;
-        public static final int act_game_text_charname=0x7f0a0007;
+        public static final int act_game_text_charname=0x7f0a0005;
         public static final int act_main_btn_char_chooser=0x7f0a0003;
+        public static final int act_shopping_btn_search_by_category=0x7f0a0007;
+        public static final int act_shopping_text_shopname=0x7f0a0006;
         public static final int action_settings=0x7f0a0009;
         public static final int buy_btn=0x7f0a0004;
         public static final int charname=0x7f0a0002;
-        public static final int shop_chooser_button=0x7f0a0005;
-        public static final int shop_name=0x7f0a0006;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -61,6 +61,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class string {
         public static final int act_game_btn_shopping=0x7f06000b;
+        public static final int act_shopping_btn_search_by_category=0x7f06000c;
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
         public static final int character_name=0x7f060003;
@@ -68,6 +69,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int character_type_chooser_title=0x7f060005;
         public static final int dummy_button=0x7f060009;
         public static final int dummy_content=0x7f06000a;
+        public static final int frag_product_category_chooser_title=0x7f06000d;
         public static final int hello_world=0x7f060002;
         public static final int ok=0x7f060006;
         public static final int title_activity_game=0x7f060008;

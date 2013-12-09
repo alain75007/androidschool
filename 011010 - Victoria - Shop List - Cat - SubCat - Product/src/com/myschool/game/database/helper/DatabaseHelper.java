@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.myschool.game.main.MyApplication;
 import com.myschool.game.model.Product;
 import com.myschool.game.model.Shop;
 
@@ -27,7 +28,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String TABLE_PRODUCT = "products";
 
 	// Commun Columns name
-	private static final String KEY_ID = "id";
+	/**
+	 * KEY_ID = _id
+	 * 
+	 * _id is useful when you are using the enhanced Adapters which make use of
+	 * a Cursor (e.g. ResourceCursorAdapter). It's used by these adapters to
+	 * provide an ID which can be used to refer to the specific row in the table
+	 * which relates the the item in whatever the adapter is being used for
+	 * (e.g. a row in a ListView). It's not necessary if you're not going to be
+	 * using classes which need an _id column in a cursor, and you can also use
+	 * "as _id" to make another column appear as though it's called _id in your
+	 * cursor
+	 * 
+	 * http://stackoverflow.com/questions/3192064/about-id-field-in-android-
+	 * sqlite
+	 */
+	private static final String KEY_ID = "_id";
 
 	// Table shops - columns name
 	private static final String KEY_SHOP_NAME = "name";
@@ -58,6 +74,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(CREATE_TABLE_SHOP);
 		db.execSQL(CREATE_TABLE_PRODUCT);
+		// this.initializeDatabase();
 	}
 
 	@Override
@@ -82,18 +99,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public Shop getShop(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
-		String sql = "SELECT * FROM " + TABLE_SHOP + " WHERE id " + id;
+		String sql = "SELECT * FROM " + TABLE_SHOP + " WHERE " + KEY_ID + " = "
+				+ id;
 		Cursor cursor = db.rawQuery(sql, null);
 		if (cursor != null) {
 			cursor.moveToFirst();
 		}
+		return getShop(cursor, 0);
+	}
+
+	public Shop getShop(Cursor cursor, int position) {
 		Shop shop = new Shop();
 		shop.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
 		shop.setName(cursor.getString(cursor.getColumnIndex(KEY_SHOP_NAME)));
 		return shop;
 	}
 
-	public List<Shop> getAllShops() {
+	public List<Shop> getShopList() {
 		List<Shop> shops = new ArrayList<Shop>();
 		SQLiteDatabase db = this.getReadableDatabase();
 		String sql = "SELECT * FROM " + TABLE_SHOP;
@@ -109,6 +131,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			} while (cursor.moveToNext());
 		}
 		return shops;
+	}
+
+	public Cursor getAllShops() {
+		SQLiteDatabase db = this.getReadableDatabase();
+		String sql = "SELECT * FROM " + TABLE_SHOP;
+		Cursor cursor = db.rawQuery(sql, null);
+		Log.d("Alain", "count = " + cursor.getCount());
+		cursor.moveToFirst();
+		return cursor;
 	}
 
 	public int updateShop(Shop shop) {
@@ -141,7 +172,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public Product getProduct(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
-		String sql = "SELECT * FROM " + TABLE_PRODUCT + " WHERE id " + id;
+		String sql = "SELECT * FROM " + TABLE_PRODUCT + " WHERE " + KEY_ID
+				+ " = " + id;
 		Cursor cursor = db.rawQuery(sql, null);
 		if (cursor != null) {
 			cursor.moveToFirst();
@@ -149,7 +181,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return getProduct(cursor);
 	}
 
-	public List<Product> getAllProducts(Shop shop) {
+	public List<Product> getProductList(Shop shop) {
 		List<Product> products = new ArrayList<Product>();
 		SQLiteDatabase db = this.getReadableDatabase();
 		String sql = "SELECT * FROM " + TABLE_PRODUCT + " WHERE "
@@ -161,6 +193,62 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			} while (cursor.moveToNext());
 		}
 		return products;
+	}
+
+	public List<String> getProductCategories(Shop shop) {
+		List<String> categories = new ArrayList<String>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		String sql = "SELECT category FROM " + TABLE_PRODUCT + " WHERE "
+				+ KEY_PRODUCT_SHOP_ID + " = " + shop.getId() + " GROUP BY "
+				+ KEY_PRODUCT_CATEGORY;
+		Cursor cursor = db.rawQuery(sql, null);
+		Log.d("Alain",
+				"Shop " + shop.getName() + ": Categories nb:"
+						+ cursor.getCount());
+		if (cursor.moveToFirst()) {
+			do {
+				categories.add(cursor.getString(cursor
+						.getColumnIndex(KEY_PRODUCT_CATEGORY)));
+			} while (cursor.moveToNext());
+		}
+		return categories;
+	}
+
+	public List<String> getProductCategories(int shopId) {
+		List<String> categories = new ArrayList<String>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		String sql = "SELECT category FROM " + TABLE_PRODUCT + " WHERE "
+				+ KEY_PRODUCT_SHOP_ID + " = " + shopId + " GROUP BY "
+				+ KEY_PRODUCT_CATEGORY;
+		Cursor cursor = db.rawQuery(sql, null);
+		Log.d("Alain",
+				"Shop " + shopId + ": Categories nb:" + cursor.getCount());
+		if (cursor.moveToFirst()) {
+			do {
+				categories.add(cursor.getString(cursor
+						.getColumnIndex(KEY_PRODUCT_CATEGORY)));
+			} while (cursor.moveToNext());
+		}
+		return categories;
+	}
+
+	public List<String> getSubCategories(int shopId, String category) {
+		List<String> subCategories = new ArrayList<String>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		String sql = "SELECT " + KEY_PRODUCT_SUBCATEGORY + " FROM " + TABLE_PRODUCT + " WHERE "
+				+ KEY_PRODUCT_SHOP_ID + " = " + shopId + " AND "
+				+ KEY_PRODUCT_CATEGORY + " = '" + category + "' GROUP BY "
+				+ KEY_PRODUCT_SUBCATEGORY;
+		Cursor cursor = db.rawQuery(sql, null);
+		Log.d("Alain",
+				"Shop " + shopId + ": Categories nb:" + cursor.getCount());
+		if (cursor.moveToFirst()) {
+			do {
+				subCategories.add(cursor.getString(cursor
+						.getColumnIndex(KEY_PRODUCT_SUBCATEGORY)));
+			} while (cursor.moveToNext());
+		}
+		return subCategories;
 	}
 
 	private Product getProduct(Cursor cursor) {
@@ -198,11 +286,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.delete(TABLE_PRODUCT, KEY_ID + " = " + product.getId(), null);
 	}
 
-	public void logAllShops() {
-		List<Shop> shopList = getAllShops();
+	public void logShopList() {
+		List<Shop> shopList = getShopList();
 		for (Shop shop : shopList) {
 			Log.d("Alain", "Shop " + shop.getName());
-			List<Product> productList = getAllProducts(shop);
+			List<Product> productList = getProductList(shop);
 			for (Product p : productList) {
 				Log.d("Alain",
 						"  Product " + p.getName() + " category: "
@@ -212,7 +300,69 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 			}
 		}
+
+	}
+
+	public void initializeDatabase() {
+		// Initialisation de la database
+
+		Shop shop;
+		Product product;
+		shop = new Shop("Kevin Weapons");
+		this.createShop(shop);
+
+		product = new Product(shop, "Arc", "Armes", "Arme de projection", 100,
+				10);
+		this.createProduct(product);
+
+		product = new Product(shop, "Arbalète", "Armes", "Arme de projection",
+				100, 10);
+		this.createProduct(product);
+
+		product = new Product(shop, "Epée", "Armes", "Armes blanche", 80, 10);
+		this.createProduct(product);
+
+		product = new Product(shop, "Poignard", "Armes", "Arme blanche", 50, 10);
+		this.createProduct(product);
+
+		shop = new Shop("Jules Wear");
+		this.createShop(shop);
+
+		product = new Product(shop, "Armure", "Protection", "Armure", 120, 10);
+		this.createProduct(product);
+
+		product = new Product(shop, "Casque", "Protection", "Armure", 120, 10);
+		this.createProduct(product);
+
+		product = new Product(shop, "Jambière", "Protection", "Armure", 120, 10);
+		this.createProduct(product);
+
+		product = new Product(shop, "Cotte de mailles", "Protection", "Armure",
+				120, 10);
+		this.createProduct(product);
+
+		product = new Product(shop, "Robe rouge", "Femme", "Robe", 50, 10);
+		this.createProduct(product);
+
+		product = new Product(shop, "Robe Verte", "Femme", "Robe", 50, 10);
+		this.createProduct(product);
+
+		product = new Product(shop, "Robe Jaune", "Femme", "Robe", 50, 10);
+		this.createProduct(product);
 		
+		product = new Product(shop, "Chapeau jaune", "Femme", "Chapeau", 50, 10);
+		this.createProduct(product);
+
+		product = new Product(shop, "Pantalon noir", "Homme", "Pantalon", 50,
+				10);
+		this.createProduct(product);
+
+		product = new Product(shop, "Pantalon blanc", "Homme", "Pantalon", 50,
+				10);
+		this.createProduct(product);
+
+		this.logShopList();
+
 	}
 
 }

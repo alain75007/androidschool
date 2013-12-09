@@ -19,5 +19,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="act_game_btn_shopping">Shopping</string>
+    <string name="act_shopping_btn_search_by_category">Recherche par catégories</string>
 
+    <string name="frag_product_category_chooser_title">"Choisissez une categorie:"</string>
 </resources>

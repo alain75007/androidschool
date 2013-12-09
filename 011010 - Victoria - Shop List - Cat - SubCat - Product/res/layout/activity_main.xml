@@ -31,7 +31,7 @@
         android:id="@+id/act_main_btn_char_chooser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onCharTypeButtonClick"
+        android:onClick="onCharTypeChooserButtonClick"
         android:text="@string/character_type" />
 
     <Button

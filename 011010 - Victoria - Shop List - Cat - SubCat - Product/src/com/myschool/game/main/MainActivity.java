@@ -1,4 +1,4 @@
-package com.myschool.game.main;
+	package com.myschool.game.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,7 +45,7 @@ public class MainActivity extends FragmentActivity implements
 		return true;
 	}
 
-	public void onCharTypeButtonClick(View v) {
+	public void onCharTypeChooserButtonClick(View v) {
 		DialogFragment dialog = new CharTypeChooserFragment();
 		dialog.show(this.getSupportFragmentManager(), "NoticeDialogFragment");
 	}
