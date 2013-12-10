@@ -201,8 +201,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		String sql = "SELECT * FROM " + TABLE_PRODUCT + " WHERE "
 				+ KEY_PRODUCT_SHOP_ID + " = " + shopId + " AND " 
-				+ KEY_PRODUCT_CATEGORY + " = " + category + " AND "
-				+ KEY_PRODUCT_SUBCATEGORY + " = " + subCategory;
+				+ KEY_PRODUCT_CATEGORY + " = '" + category + "' AND "
+				+ KEY_PRODUCT_SUBCATEGORY + " = '" + subCategory + "'";
  		Cursor cursor = db.rawQuery(sql, null);
 		return cursor;
 	}

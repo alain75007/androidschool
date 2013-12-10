@@ -13,16 +13,6 @@ public class ShoppingActivity extends Activity {
 		setContentView(R.layout.activity_shopping);
 		MyApplication myApplication = (MyApplication) getApplication();
 		Toast.makeText(getApplicationContext(), "Nom du personnage " + myApplication.person.getName(), Toast.LENGTH_SHORT).show();
-
-		//Product product =  new Product("Bow", 10);
-/*		StoreDatabaseHelper storeDatabaseHelper = new databaseHelper(myApplication);
-		Cursor cursor = storeDatabaseHelper.selectAll(null);
-		Log.i("Alain",  "Number of rows : " + cursor.getCount());
-
-		while (cursor.moveToNext()) {
-			Log.i("Alain","Name " +  cursor.getString(0));
-		}*/
-		//Log.i("Alain", toto);
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import com.myschool.game.model.Store;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "store.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 3;
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -25,10 +25,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String TABLE_SHOP_PRODUCT = "shop_products";
 
 	// Commun Columns name
-	private static final String KEY_ID = "id";
+	private static final String KEY_ID = "_id";
 
 	// Table shops - columns name
-	private static final String KEY_SHOP_NAME = "name";
+	public static final String KEY_SHOP_NAME = "name";
 
 	// Table products - columns name
 	private static final String KEY_PRODUCT_NAME = "name";
@@ -46,26 +46,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	// Create table shops
 	private static final String CREATE_TABLE_SHOP = "CREATE TABLE "
 			+ TABLE_SHOP + "(" + KEY_ID
-			+ " LONG PRIMARY KEY AUTOINCREMENT, " + KEY_SHOP_NAME + " TEXT"
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_SHOP_NAME + " TEXT"
 			+ ")";
 
 	// Create table products
 	private static final String CREATE_TABLE_PRODUCT = "CREATE TABLE "
 			+ TABLE_PRODUCT + "(" + KEY_ID
-			+ " LONG PRIMARY KEY AUTOINCREMENT," + KEY_PRODUCT_NAME
-			+ " TEXT, " + KEY_CATEGORY_ID + " LONG" + ")";
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_PRODUCT_NAME
+			+ " TEXT, " + KEY_CATEGORY_ID + " INTEGER" + ")";
 
 	// Create table categories
 	private static final String CREATE_TABLE_CATEGORY = "CREATE TABLE "
 			+ TABLE_CATEGORY + " (" + KEY_ID
-			+ " LONG PRIMARY KEY AUTOINCREMENT," + KEY_CATEGORY_NAME
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_CATEGORY_NAME
 			+ " TEXT" + ")";
 
 	// Create table shop_products
 	private static final String CREATE_TABLE_SHOP_PRODUCT = "CREATE TABLE "
 			+ TABLE_SHOP_PRODUCT + " (" + KEY_ID
-			+ " LONG PRIMARY KEY AUTOINCREMENT, " + KEY_SHOP_ID
-			+ " LONG," + KEY_PRODUCT_ID + " LONG," + KEY_PRODUCT_COUNT
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_SHOP_ID
+			+ " INTEGER," + KEY_PRODUCT_ID + " INTEGER," + KEY_PRODUCT_COUNT
 			+ " INTEGER," + KEY_PRODUCT_PRICE + " INTEGER" + ")";
 
 	@Override
@@ -98,6 +98,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(KEY_SHOP_NAME, shop.getName());
 		long shop_id = db.insert(TABLE_SHOP, null, values);
 		return shop_id;
+	}
+	
+	public Cursor getShops() {
+		SQLiteDatabase db = this.getReadableDatabase();
+		String sql = "SELECT * FROM " + TABLE_SHOP;
+		Cursor cursor = db.rawQuery(sql, null);
+		return cursor;
+	}
+	
+	public void initializeShopDatabase() {
+		
 	}
 
 }

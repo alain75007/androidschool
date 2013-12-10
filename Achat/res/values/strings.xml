@@ -6,14 +6,17 @@
     <string name="hello_world">Hello world!</string>
     <string name="character_name">Nom du personnage</string>
     <string name="character_type">Type de personnage</string>
+    <string name="character_type_chooser_title">Choisissez un type de personnage:</string>
 
     <string-array name="character_type_array">
-        <item></item>
         <item>Personnage</item>
         <item>Warrior</item>
     </string-array>
 
     <string name="ok">OK</string>
     <string name="title_activity_shopping">ShoppingActivity</string>
+    <string name="act_main_btn_char_chooser">Choisissez un type de personnage</string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="act_game_btn_shop_chooser_title">Shops</string>
 
 </resources>
