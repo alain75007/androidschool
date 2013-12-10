@@ -38,7 +38,7 @@ public class ProductCategoryChooserFragment extends DialogFragment {
 					public void onClick(DialogInterface dialog, int which) {
 						DialogFragment dialog2 = new ProductSubCategoryChooserFragment();
 						String selectedCategory = mCategories.get(which);
-						mBundle.putString("selected_category", selectedCategory);
+						mBundle.putString("selected_product_category", selectedCategory);
 						dialog2.setArguments(mBundle);
 						dialog2.show(getActivity().getSupportFragmentManager(), "ProductCategoryChooserFragment");
 

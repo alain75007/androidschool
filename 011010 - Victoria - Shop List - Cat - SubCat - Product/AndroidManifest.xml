@@ -27,7 +27,20 @@
             android:name="com.myschool.game.main.GameActivity"
             android:label="@string/title_activity_game" >
         </activity>
-        <activity android:name="com.myschool.game.shopping.ShoppingActivity"></activity>
+        <activity android:name="com.myschool.game.shopping.ShoppingActivity" >
+        </activity>
+        <activity
+            android:name="com.myschool.game.shopping.ProductListActivity"
+            android:label="@string/title_product_list" >
+        </activity>
+        <activity
+            android:name="com.myschool.game.shopping.ProductDetailActivity"
+            android:label="@string/title_product_detail"
+            android:parentActivityName = "com.myschool.game.shopping.ProductListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ProductListActivity" />
+        </activity>
     </application>
 
 </manifest>

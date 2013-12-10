@@ -16,7 +16,7 @@ import com.myschool.game.model.Shop;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-	private static final String DATABASE_NAME = "game.db";
+	private static final String DATABASE_NAME = "shops.db";
 	private static final int DATABASE_VERSION = 1;
 
 	public DatabaseHelper(Context context) {
@@ -72,6 +72,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SHOP);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCT);
 		db.execSQL(CREATE_TABLE_SHOP);
 		db.execSQL(CREATE_TABLE_PRODUCT);
 		// this.initializeDatabase();
@@ -195,6 +197,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return products;
 	}
 
+	public Cursor getProductCursor(int shopId, String category, String subCategory) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		String sql = "SELECT * FROM " + TABLE_PRODUCT + " WHERE "
+				+ KEY_PRODUCT_SHOP_ID + " = " + shopId + " AND " 
+				+ KEY_PRODUCT_CATEGORY + " = " + category + " AND "
+				+ KEY_PRODUCT_SUBCATEGORY + " = " + subCategory;
+ 		Cursor cursor = db.rawQuery(sql, null);
+		return cursor;
+	}
+	
 	public List<String> getProductCategories(Shop shop) {
 		List<String> categories = new ArrayList<String>();
 		SQLiteDatabase db = this.getReadableDatabase();
@@ -266,6 +278,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		product.setCount(cursor.getInt(cursor.getColumnIndex(KEY_PRODUCT_COUNT)));
 		return product;
 	}
+	
 
 	public int updateProduct(Product product) {
 		SQLiteDatabase db = this.getWritableDatabase();

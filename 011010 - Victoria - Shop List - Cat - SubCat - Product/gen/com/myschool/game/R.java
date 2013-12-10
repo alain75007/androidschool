@@ -40,19 +40,41 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class id {
         public static final int LinearLayout1=0x7f0a0000;
         public static final int TextView02=0x7f0a0001;
-        public static final int act_game_btn_buy=0x7f0a0008;
-        public static final int act_game_text_charname=0x7f0a0005;
+        public static final int act_game_btn_buy=0x7f0a000b;
+        public static final int act_game_text_charname=0x7f0a0007;
         public static final int act_main_btn_char_chooser=0x7f0a0003;
-        public static final int act_shopping_btn_search_by_category=0x7f0a0007;
-        public static final int act_shopping_text_shopname=0x7f0a0006;
-        public static final int action_settings=0x7f0a0009;
+        public static final int act_shopping_btn_search_by_category=0x7f0a0009;
+        public static final int act_shopping_text_shopname=0x7f0a0008;
+        public static final int action_settings=0x7f0a000c;
         public static final int buy_btn=0x7f0a0004;
         public static final int charname=0x7f0a0002;
+        public static final int product_detail=0x7f0a000a;
+        public static final int product_detail_container=0x7f0a0005;
+        public static final int product_list=0x7f0a0006;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int activity_shopping=0x7f030001;
-        public static final int game_activity=0x7f030002;
+        public static final int activity_product_detail=0x7f030001;
+        /** 
+    Layout alias to replace the single-pane version of the layout with a
+    two-pane version on Large screens.
+
+    For more on layout aliases, see:
+    http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
+    
+
+    Layout alias to replace the single-pane version of the layout with a
+    two-pane version on Large screens.
+
+    For more on layout aliases, see:
+    http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
+    
+         */
+        public static final int activity_product_list=0x7f030002;
+        public static final int activity_product_twopane=0x7f030003;
+        public static final int activity_shopping=0x7f030004;
+        public static final int fragment_product_detail=0x7f030005;
+        public static final int game_activity=0x7f030006;
     }
     public static final class menu {
         public static final int game=0x7f090000;
@@ -74,6 +96,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ok=0x7f060006;
         public static final int title_activity_game=0x7f060008;
         public static final int title_activity_shopping=0x7f060007;
+        public static final int title_product_detail=0x7f06000f;
+        public static final int title_product_list=0x7f06000e;
     }
     public static final class style {
         /** 

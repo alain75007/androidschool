@@ -34,11 +34,14 @@ public class ShopChooserFragment extends DialogFragment {
 		 * (since Activity extends Context).
 		 */											
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		//builder.setView(view)
 		builder.setTitle(R.string.character_type_chooser_title).setCursor(
 				mCursor,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						mShop = mDatabaseHelper.getShop(mCursor, which);
+						Log.d("Alain", "Selected Shop: id=" + mShop.getId() + "; name=" + mShop.getName());
+						
 						Intent intent = new Intent(mMyApplication, ShoppingActivity.class);
 						intent.putExtra("selected_shop_id", mShop.getId());
 						intent.putExtra("selected_shop_name", mShop.getName());
