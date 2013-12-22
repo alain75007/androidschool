@@ -18,5 +18,8 @@
     <string name="act_main_btn_char_chooser">Choisissez un type de personnage</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="act_game_btn_shop_chooser_title">Shops</string>
+    <string name="act_shop_btn_products">Produits...</string>
+    <string name="act_shop_product_chooser_title">Choisissez un produit</string>
+    <string name="title_activity_product_detail">ProductDetailActivity</string>
 
 </resources>

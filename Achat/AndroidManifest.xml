@@ -24,12 +24,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.myschool.achat.ShoppingActivity"
+            android:name="com.myschool.game.shop.ShopActivity"
             android:label="@string/title_activity_shopping" >
         </activity>
         <activity
             android:name="com.myschool.achat.GameActivity"
             android:label="@string/title_activity_game" >
+        </activity>
+        <activity
+            android:name="com.myschool.game.shop.ProductDetailActivity"
+            android:label="@string/title_activity_product_detail" >
         </activity>
     </application>
 

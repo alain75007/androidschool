@@ -1,5 +1,6 @@
 package com.myschool.achat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -7,7 +8,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-public class GameActivity extends FragmentActivity {
+import com.myschool.achat.ShopChooserFragment.ShopChooserListener;
+import com.myschool.game.shop.ShopActivity;
+
+public class GameActivity extends FragmentActivity implements ShopChooserListener {
 
 	private Bundle mBundle;
 
@@ -32,6 +36,14 @@ public class GameActivity extends FragmentActivity {
 	public void onShopChooserBtnClick(View view) {
 		DialogFragment dialog = new ShopChooserFragment();
 		dialog.show(this.getSupportFragmentManager(), "ShopChooserDialogFragment");
+	}
+
+	@Override
+	public void onFinishCharTypeChooser(int shopId) {
+		Intent intent = new Intent(this, ShopActivity.class);
+		mBundle.putInt("shop_id", shopId);
+		intent.putExtra("game_bundle", mBundle);
+		startActivity(intent);
 	}
 
 }

@@ -3,6 +3,7 @@ package com.myschool.achat;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
@@ -15,6 +16,7 @@ public class ShopChooserFragment extends DialogFragment {
 	}
 
 	private DatabaseHelper mDatabaseHelper;
+	private Cursor mCursor;
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -31,19 +33,22 @@ public class ShopChooserFragment extends DialogFragment {
 		// Set dialog Title
 		builder.setTitle(R.string.character_type_chooser_title);
 		mDatabaseHelper  = new DatabaseHelper(getActivity());
-		
+		mCursor = mDatabaseHelper.getShops();
 		// Set dialog item
 		builder.setCursor(
-				mDatabaseHelper.getShops(),
+				mCursor,
 				new DialogInterface.OnClickListener() {  //listener 
 					public void onClick(DialogInterface dialog, int which) {
 
+						mCursor.moveToPosition(which);
+						int columnIndex = mCursor.getColumnIndex(DatabaseHelper.KEY_ID);
+						int shopId  = mCursor.getInt(columnIndex);
 						// Get call calling activity (which implement interface
 						// method CharTypeChooserListener
 						ShopChooserListener activity = (ShopChooserListener) getActivity();
-
+						
 						// Call interface method of calling onFinsih
-						activity.onFinishCharTypeChooser(which);
+						activity.onFinishCharTypeChooser(shopId);
 
 					}
 				}, DatabaseHelper.KEY_SHOP_NAME);
