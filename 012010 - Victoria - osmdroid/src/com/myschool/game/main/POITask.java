@@ -32,7 +32,7 @@ import com.myschool.game.R;
                 
                 public POITask(Context mContext, MapView mMapView) {
                 	this.mContext = mContext;
-                	this.mMapView = mMapView;
+	                	this.mMapView = mMapView;
                     mWaitSpinner = new ProgressDialog(this.mContext);
                 }
 
