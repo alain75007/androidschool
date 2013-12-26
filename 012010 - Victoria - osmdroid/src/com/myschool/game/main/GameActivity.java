@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.api.IGeoPoint;
+import org.osmdroid.bonuspack.location.NominatimPOIProvider;
+import org.osmdroid.bonuspack.location.POI;
+import org.osmdroid.bonuspack.overlays.ExtendedOverlayItem;
+import org.osmdroid.bonuspack.overlays.ItemizedOverlayWithBubble;
 import org.osmdroid.tileprovider.IRegisterReceiver;
 import org.osmdroid.tileprovider.MapTileProviderArray;
 import org.osmdroid.tileprovider.MapTileProviderBase;
@@ -16,6 +20,7 @@ import org.osmdroid.tileprovider.modules.TileWriter;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.tileprovider.util.SimpleRegisterReceiver;
+import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
@@ -26,6 +31,7 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
@@ -50,6 +56,7 @@ public class GameActivity extends FragmentActivity {
 	private static final String PREFS_APP_MY_LOCATION = "current location";
 	private static final String PREFS_APP_FOLLOW_LOCATION = "follow location";
 	private static final String PREFS_APP_PROVIDER = "location provider";
+	private static final long TIME_TO_WAIT_IN_MS = 100;
 	private MyApplication mMyApplication;
 	private MapView mMapView;
 	private ArrayList<OverlayItem> mItems;
@@ -89,6 +96,7 @@ public class GameActivity extends FragmentActivity {
 		    }
 		});	
 	}
+
 
 	public void onShopChooserButtonClick(View v) {
 		DialogFragment dialog = new ShopChooserFragment();
@@ -138,17 +146,44 @@ public class GameActivity extends FragmentActivity {
 		mMapView = (MapView) findViewById(R.id.mapview);
 		// mMapView.setTileSource(TileSourceFactory.MAPNIK);
 		final ITileSource tileSource = new XYTileSource("Mapnik",
-				ResourceProxy.string.mapnik, 0, 18, 1024, ".png",
+				ResourceProxy.string.mapnik, 0, 18, 258, ".png",
 				"http://tile.openstreetmap.org/");
 		mMapView.setTileSource(tileSource);
 		mMapView.setBuiltInZoomControls(true);
 		mMapView.setMultiTouchControls(true);
 		mMapController = (MapController) mMapView.getController();
 
+		mMapView.postDelayed(waitForMapTimeTask, TIME_TO_WAIT_IN_MS);
 		reinitLocation();
- 
+
+		addPoiOverlay();
 	}
 	
+	 @Override
+	protected void onResume() {
+		mMapView.postDelayed(waitForMapTimeTask, TIME_TO_WAIT_IN_MS);
+		super.onResume();
+	}
+
+	/**
+	 * Wait for mapview to become ready.
+	 * 
+	 * getLatitudeSpan and getLongitudeSpan only works to give you
+	 * the spans for the visible portion of the map. So if you call them in
+	 * onCreate() the map will not always have been displayed yet.
+	 * 
+	 */
+	private Runnable waitForMapTimeTask = new Runnable() {
+		public void run() {
+			// If either is true we must wait.
+			Log.d("Alain", " xxx longiture="+  mMapView.getLongitudeSpan());
+			if (mMapView.getLatitudeSpan() == 0
+					|| mMapView.getLongitudeSpan() == 360000000)
+				mMapView.postDelayed(waitForMapTimeTask, TIME_TO_WAIT_IN_MS);
+		}
+	};
+   
+   
 	private void reinitLocation() {
 		getRealLocation();
 	    addIcons();
@@ -174,6 +209,7 @@ public class GameActivity extends FragmentActivity {
 		mMapController.setZoom(mCurrentZoom);
         mMapView.getController().animateTo(mCurrentPoint);
 		Log.d("Alain", "Restore default location and Zoom");
+		addPoiOverlay();
 		
 	}
 	
@@ -252,7 +288,39 @@ public class GameActivity extends FragmentActivity {
         mMyLocationOverlay.enableMyLocation();
 	}
 	
+	public void addPoiOverlay() {
+		String mTag = "flickr";
+		new POITask(this, mMapView).execute(mTag);
+/*		final ArrayList<ExtendedOverlayItem> poiItems = new ArrayList<ExtendedOverlayItem>();
+		ItemizedOverlayWithBubble<ExtendedOverlayItem> poiMarkers = new ItemizedOverlayWithBubble<ExtendedOverlayItem>(
+				this, poiItems, mMapView, new CustomMapInfoWindow(mMapView));
+		mMapView.getOverlays().add(poiMarkers);
+		NominatimPOIProvider poiProvider = new NominatimPOIProvider();
+		// poiProvider.setService(NominatimPOIProvider.MAPQUEST_POI_SERVICE);
+		poiProvider.setService(NominatimPOIProvider.NOMINATIM_POI_SERVICE);
 
+		BoundingBoxE6 bb = mMapView.getBoundingBox();
+		ArrayList<POI> pois = poiProvider.getPOIInside(bb, mTag, 10);
+		pois = poiProvider.getPOIInside(bb, mTag, 10);
+
+		// GeoPoint igp = (GeoPoint) mMapView.getMapCenter();
+		// ArrayList<POI> pois = poiProvider.getPOICloseTo( igp, "cinema", 50,
+		// 0.1);
+
+		for (POI poi : pois) {
+			ExtendedOverlayItem poiItem = new ExtendedOverlayItem(poi.mType,
+					poi.mDescription, poi.mLocation, mMapView.getContext());
+			Drawable poiMarker = getResources().getDrawable(
+					R.drawable.pin_default);
+			poiItem.setMarker(poiMarker);
+			poiItem.setMarkerHotspot(OverlayItem.HotspotPlace.CENTER);
+			if (poi.mThumbnail != null) {
+				poiItem.setImage(new BitmapDrawable(poi.mThumbnail));
+			}
+			poiMarkers.addItem(poiItem);
+		}*/
+	}
+	
 	private void createMapOBSO() {
 		final Context context = this;
 		final Context applicationContext = context.getApplicationContext();

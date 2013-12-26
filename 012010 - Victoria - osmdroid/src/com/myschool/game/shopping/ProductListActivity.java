@@ -1,7 +1,6 @@
 package com.myschool.game.shopping;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 

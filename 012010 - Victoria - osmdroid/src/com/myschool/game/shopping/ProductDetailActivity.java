@@ -1,14 +1,12 @@
 package com.myschool.game.shopping;
 
-import com.myschool.game.R;
-import com.myschool.game.R.id;
-import com.myschool.game.R.layout;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+
+import com.myschool.game.R;
 
 /**
  * An activity representing a single Product detail screen. This activity is

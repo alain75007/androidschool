@@ -10,7 +10,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.myschool.game.main.MyApplication;
 import com.myschool.game.model.Product;
 import com.myschool.game.model.Shop;
 

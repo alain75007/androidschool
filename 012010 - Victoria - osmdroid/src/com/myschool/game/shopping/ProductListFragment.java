@@ -1,19 +1,14 @@
 package com.myschool.game.shopping;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.myschool.game.R;
 import com.myschool.game.database.helper.DatabaseHelper;
-import com.myschool.game.dummy.DummyContent;
 
 /**
  * A list fragment representing a list of Products. This fragment also supports
