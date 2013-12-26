@@ -153,14 +153,15 @@ public class GameActivity extends FragmentActivity {
 		mMapView.setMultiTouchControls(true);
 		mMapController = (MapController) mMapView.getController();
 
-		mMapView.postDelayed(waitForMapTimeTask, TIME_TO_WAIT_IN_MS);
 		reinitLocation();
+		mMapView.postDelayed(waitForMapTimeTask, TIME_TO_WAIT_IN_MS);
 
 		addPoiOverlay();
 	}
 	
 	 @Override
 	protected void onResume() {
+		Log.d("Alain", "onResume");
 		mMapView.postDelayed(waitForMapTimeTask, TIME_TO_WAIT_IN_MS);
 		super.onResume();
 	}
@@ -176,7 +177,10 @@ public class GameActivity extends FragmentActivity {
 	private Runnable waitForMapTimeTask = new Runnable() {
 		public void run() {
 			// If either is true we must wait.
-			Log.d("Alain", " xxx longiture="+  mMapView.getLongitudeSpan());
+			Log.d("Alain", " xxx longiture=" + mMapView.getLongitudeSpan());
+			Log.d("Alain", " xxx lattitude=" + mMapView.getLatitudeSpan());
+			Log.d("Alain", " xxx zoom=" + mMapView.getZoomLevel());
+
 			if (mMapView.getLatitudeSpan() == 0
 					|| mMapView.getLongitudeSpan() == 360000000)
 				mMapView.postDelayed(waitForMapTimeTask, TIME_TO_WAIT_IN_MS);
@@ -289,7 +293,7 @@ public class GameActivity extends FragmentActivity {
 	}
 	
 	public void addPoiOverlay() {
-		String mTag = "flickr";
+		String mTag = "wikipedia";
 		new POITask(this, mMapView).execute(mTag);
 /*		final ArrayList<ExtendedOverlayItem> poiItems = new ArrayList<ExtendedOverlayItem>();
 		ItemizedOverlayWithBubble<ExtendedOverlayItem> poiMarkers = new ItemizedOverlayWithBubble<ExtendedOverlayItem>(

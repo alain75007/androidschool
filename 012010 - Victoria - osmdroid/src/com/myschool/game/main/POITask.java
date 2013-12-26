@@ -14,8 +14,6 @@ import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.OverlayItem;
 
-import com.myschool.game.R;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
@@ -23,6 +21,8 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.myschool.game.R;
 
      class POITask extends AsyncTask<Object, Void, List<POI>> {
                 String mTag;
@@ -42,24 +42,30 @@ import android.widget.Toast;
 
                         if (mTag == null || mTag.equals("")) {
                                 return null;
-                        } else if (mTag.equals("wikipedia")) {
+                        }
+                        if (mMapView.getZoomLevel() > 2 ) {
+                            return null;
+                        }
+                        BoundingBoxE6 bb = mMapView.getBoundingBox();
+                        Log.d("Alain", this.toString() + " doInBackground lati=" + bb.getLatitudeSpanE6());
+                        Log.d("Alain", this.toString() + " doInBackground long=" + bb.getLongitudeSpanE6());
+
+
+                       if (mTag.equals("wikipedia")) {
                                 GeoNamesPOIProvider poiProvider = new GeoNamesPOIProvider("mkergall");
                                 //ArrayList<POI> pois = poiProvider.getPOICloseTo(point, 30, 20.0);
                                 //Get POI inside the bounding box of the current map view:
-                                BoundingBoxE6 bb = mMapView.getBoundingBox();
-                                ArrayList<POI> pois = poiProvider.getPOIInside(bb, 30);
+                                ArrayList<POI> pois = poiProvider.getPOIInside(bb, 50);
                                 return pois;
                         } else if (mTag.equals("flickr")) {
                                 FlickrPOIProvider poiProvider = new FlickrPOIProvider(
                                                 "c39be46304a6c6efda8bc066c185cd7e");
-                                BoundingBoxE6 bb = mMapView.getBoundingBox();
-                                ArrayList<POI> pois = poiProvider.getPOIInside(bb, 20);
+                                ArrayList<POI> pois = poiProvider.getPOIInside(bb, 50);
                                 return pois;
                         } else if (mTag.startsWith("picasa")) {
                                 PicasaPOIProvider poiProvider = new PicasaPOIProvider(null);
-                                BoundingBoxE6 bb = mMapView.getBoundingBox();
                                 String q = mTag.substring("picasa".length());
-                                List<POI> pois = poiProvider.getPOIInside(bb, 20, q);
+                                List<POI> pois = poiProvider.getPOIInside(bb, 50, q);
                                 return pois;
                         }
                         /*else if (mTag.startsWith("foursquare")) {
@@ -76,8 +82,7 @@ import android.widget.Toast;
                                 poiProvider.setService(NominatimPOIProvider.NOMINATIM_POI_SERVICE);
                                 ArrayList<POI> pois;
                                 //                                if (destinationPoint == null) {
-                                BoundingBoxE6 bb = mMapView.getBoundingBox();
-                                pois = poiProvider.getPOIInside(bb, mTag, 10);
+                                pois = poiProvider.getPOIInside(bb, mTag, 50);
 
                                 //pois = poiProvider.getPOI( mTag, 10);
                                 //        } else {
